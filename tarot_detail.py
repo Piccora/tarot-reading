@@ -108,3 +108,7 @@ pentacles_to_symbols = """
     Queen of Pentacles = queen_pentacles
     King of Pentacles = king_pentacles
 """
+
+cards_positions_to_meaning = {
+    0: "You are stepping the first few steps into this relationship, everything is still very new for you. You want to explore more even though many things are still unclear and up in the air. The sensation and chemistry between you too make it even more tempting to explore and develop this relationship."
+}
