@@ -34,6 +34,36 @@ class GameManager:
         
         return input_int(1, 3)
     
+    def display_help(self, type):
+        if type == "help_major":
+            line()
+            print("This will serve as a guide for you to type in your cards")
+            print(major_arcana_to_symbols)
+        elif type == "help_wands":
+            line()
+            print("This will serve as a guide for you to type in your cards")
+            print(wands_to_symbols)
+        elif type == "help_cups":
+            line()
+            print("This will serve as a guide for you to type in your cards")
+            print(cups_to_symbols)
+        elif type == "help_swords":
+            line()
+            print("This will serve as a guide for you to type in your cards")
+            print(swords_to_symbols)
+        elif type == "help_symbols":
+            line()
+            print("This will serve as a guide for you to type in your cards")
+            print(pentacles_to_symbols)
+        elif type == "help":
+            print(instructions_major)
+            print(instructions_wands)
+            print(instructions_cups)
+            print(instructions_swords)
+            print(instructions_pentacles)
+        else: print("Your input was incorrect, please try again.")
+        line()
+
 class GameLoop:
     """Class for handling the flow of the game, such as asking for inputs"""
     
@@ -47,5 +77,11 @@ while True:
     option = menu.display()
     line()
     
-    
-    print(instructions_2)
+    if option == 1:
+        print(instructions_2)
+        while True:
+            answer = input('Write your first card with the special syntax. For more information type "help"\n')
+            if answer in ["help", "help_major", "help_wands", "help_cups", "help_swords", "help_pentacles"]:
+                menu.display_help(answer)
+    elif option == 2:
+        print("This is still a work in progress, please choose another question.")
