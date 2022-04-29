@@ -142,7 +142,8 @@ Any surprises from meetings with the other party, handshakes, and greetings to t
     "XIV_0": "You appreciate the balance between all problems in life, conflicts and arguments are things you avoid, control and control during this period as they will upset your order of life. You want to gently heal your soul, connect with your partner with all your heart, and reconcile your differences.",
     "XIV_1": "This relationship is in a very peaceful and harmonious period, you respect each other, and live in harmony and peace. The balance of all factors in life is also what you value first because even though it is developing a love relationship, money, finance, and health are still important foundations for maintaining a relationship.",
     "XV_0": "You are feeling constrained, trapped in this very toxic relationship. The other party may be too controlling and take over every action and decision you make. If you let this situation go on for longer, your mental and physical health will become more and more damaged.",
-    "XV_1": "This relationship is developing in a rather toxic and unbalanced direction. The physical and mental constraints will weigh even more on your shoulders. You feel trapped, tired, and feel like you're being taken advantage of in your own relationship."
+    "XV_1": "This relationship is developing in a rather toxic and unbalanced direction. The physical and mental constraints will weigh even more on your shoulders. You feel trapped, tired, and feel like you're being taken advantage of in your own relationship.",
+    "II_2": "Test",
     # "XVI_0": 
 }
 
