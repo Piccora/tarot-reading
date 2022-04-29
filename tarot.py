@@ -1,5 +1,6 @@
 from tarot_detail import *
 import textwrap
+import sys
 
 # Block text
 title_banner = """
@@ -22,8 +23,6 @@ def input_int(min_num: int = -9999999, max_num: int = 9999999):
         except ValueError:
             print("Error! Please enter a valid number.")
 
-def card_error():
-    pass
 class GameManager:
     """Class for handling menus(for now)"""
     def display(self):
@@ -70,33 +69,42 @@ class GameManager:
 class GameLoop:
     """Class for handling the flow of the game, such as asking for inputs"""
     
-    def answer(answer, result):
+    def answer(self, answer, result):
         card = answer + "_" + str(result)
         if result == 0:
             card_0 = cards_positions_to_meaning[card]
+            self.answer_0 = answer
             return card_0
         elif result == 1:
             card_1 = cards_positions_to_meaning[card]
+            self.answer_1 = answer
             return card_1
         elif result == 2:
             card_2 = cards_positions_to_meaning[card]
+            self.answer_2 = answer
             return card_2
         else: return ValueError
-        while True:
-            if card_0 == card_1:
-                print(textwrap.fill("Two identical cards detected. Please input your cards all over again. The system will now restart.", 70))
     
-    def result(self):
+    def result(list):
         print("The result from your tarot reading was:")
         line()
         print("Yourself:")
-        print(self.card_0)
+        print(list[0])
         line()
         print("Your partner:")
-        print(self.card_1)
+        print(list[1])
         line()
         print("The result:")
-        print(self.card_2)
+        print(list[2])
+
+    def card_error(self):
+        """Checking whether two cards are the same or not"""
+        if self.answer_0 == self.answer_1:
+            return ValueError
+        elif self.answer_1 == self.answer_2:
+            return ValueError
+        elif self.answer_0 == self.answer_2:
+            return ValueError
 menu = GameManager()
 
 while True:
@@ -108,15 +116,19 @@ while True:
         print(textwrap.fill(instructions_2, 70))
         print(instructions_3)
         i = 0
+        card_answer = []
         while i < 3:
             answer = input('Write your first card with the special syntax. For more information type "help"\n')
             if answer in ["help", "help_major", "help_wands", "help_cups", "help_swords", "help_pentacles"]:
                 menu.display_help(answer)
             elif answer in possible_answers:
-                GameLoop.answer(answer, i)
+                card_answer.append(GameLoop.answer(answer, i))
                 i += 1
             else: print("Your input was incorrect, please try again.")
-        GameLoop.result()
+        validation = GameLoop.card_error() 
+        if validation == ValueError:
+            sys.exit("Two identical cards detected. Please input your cards all over again. The system will now restart.", 70)
+        GameLoop.result(card_answer)
                 
     elif option == 2:
         print("This is still a work in progress, please choose another question.")
