@@ -1,6 +1,5 @@
 from tarot_detail import *
 import textwrap
-import sys
 
 # Block text
 title_banner = """
@@ -14,10 +13,12 @@ title_banner = """
    \/        |     |         |    |       |    '-----'      |       \/   
 """
 
+"""Game's parameter"""
+
 def line():
     """Prints a line for seperating menus"""
     print("-" * 66)
-    
+
 def input_int(min_num: int = -9999999, max_num: int = 9999999):
     """Returns the first integer user input between min_num and max_num"""
     while True:
@@ -31,7 +32,8 @@ def input_int(min_num: int = -9999999, max_num: int = 9999999):
             print("Error! Please enter a valid number.")
 
 class GameManager:
-    """Class for handling menus(for now)"""
+    """Class for handling menus"""
+    
     def display(self):
         """Prints the main menu and waits for input"""
         print(title_banner)
@@ -43,7 +45,13 @@ class GameManager:
         
         return input_int(1, 3)
     
+    def detailed_instructions(self):
+        print(textwrap.fill(instructions_2, 70))
+        print(" ")
+        print(textwrap.fill(instructions_3, 70))
+
     def display_help(self, type):
+        """Prints the help menu"""
         if type == "help_major":
             line()
             print("This will serve as a guide for you to type in your cards:")
@@ -73,15 +81,11 @@ class GameManager:
         else: print("Your input was incorrect, please try again.")
         line()
 
-    # def reset_game(self):
-    #     """Clears the necessary vars after finishing a game."""
-    #     Question.answered = 0
-    #     Question.answered_correct = 0
-
 class GameLoop:
     """Class for handling the flow of the game, such as asking for inputs"""
     
     def answer(answer, result = 0):
+        """Converting answer to systematic responses"""
         card = answer + "_" + str(result)
         if result == 0:
             card_0 = cards_positions_to_meaning[card]
@@ -95,6 +99,7 @@ class GameLoop:
         else: return ValueError
     
     def result(list):
+        """Prints the results of the reading"""
         print("The result from your tarot reading was:")
         line()
         print("Yourself:")
@@ -114,6 +119,22 @@ class GameLoop:
             return ValueError
         elif check[0] == check[2]:
             return ValueError
+        
+    def card_input(number):
+        """Iterating through different questions"""
+        if number == 0:
+            answer = input('Write your first card with the special syntax. For more information type "help"\n>> ')
+        elif number == 1:
+            answer = input('Write your second card with the special syntax. For more information type "help"\n>> ')
+        elif number == 2:
+            answer = input('Write your third card with the special syntax. For more information type "help"\n>> ')
+        if answer in ["help", "help_major", "help_wands", "help_cups", "help_swords", "help_pentacles"]:
+            menu.display_help(answer)
+        elif answer in possible_answers:
+            card_answer_position_regard.append(answer)
+            card_answer.append(GameLoop.answer(answer, i))
+            line()
+        
 menu = GameManager()
 
 while True:
@@ -122,50 +143,21 @@ while True:
     line()
     
     if option == 1:
-        print(textwrap.fill(instructions_2, 70))
-        print(textwrap.fill(instructions_3, 70))
         i = 0
         card_answer = []
         card_answer_position_regard = []
+        menu.detailed_instructions
         while i < 3:
-            if i == 0:
-                answer = input('Write your first card with the special syntax. For more information type "help"\n')
-                if answer in ["help", "help_major", "help_wands", "help_cups", "help_swords", "help_pentacles"]:
-                    menu.display_help(answer)
-                elif answer in possible_answers:
-                    card_answer_position_regard.append(answer)
-                    card_answer.append(GameLoop.answer(answer, i))
-                    i += 1
-                    line()
-                else: print("Your input was incorrect, please try again.")
-            if i == 1:
-                answer = input('Write your second card with the special syntax. For more information type "help"\n')
-                if answer in ["help", "help_major", "help_wands", "help_cups", "help_swords", "help_pentacles"]:
-                    menu.display_help(answer)
-                elif answer in possible_answers:
-                    card_answer_position_regard.append(answer)
-                    card_answer.append(GameLoop.answer(answer, i))
-                    i += 1
-                    line()
-                else: print("Your input was incorrect, please try again.")
-            if i == 2:
-                answer = input('Write your third card with the special syntax. For more information type "help"\n')
-                if answer in ["help", "help_major", "help_wands", "help_cups", "help_swords", "help_pentacles"]:
-                    menu.display_help(answer)
-                elif answer in possible_answers:
-                    card_answer_position_regard.append(answer)
-                    card_answer.append(GameLoop.answer(answer, i))
-                    i += 1
-                    line()
-                else: print("Your input was incorrect, please try again.")
+            GameLoop.card_input(i)
+            i += 1
         validation = GameLoop.card_error(card_answer_position_regard) 
         if validation == ValueError:
-            # sys.exit(textwrap.fill("Two identical cards detected. Please input your cards all over again. The system will now restart.", 70))
             print(textwrap.fill("Two identical cards detected. Please input your cards all over again. The system will now restart.", 70))
             continue
         else: 
             GameLoop.result(card_answer)
-            restart = input('Type "restart" to restart the program\n')
+            line()
+            restart = input('Type "restart" to restart the program\n>> ')
             if restart == "restart":
                 continue
                 
